@@ -19,8 +19,37 @@ def timeit(method):
 
 def get_grid():
     """Return a dictionary of grid positions to random letters"""
-    return {(x, y): choice(ascii_uppercase) for x in range(X) for y in range(Y)}
-
+    dice = {}
+    dice['0'] = ['R','I','F','O','B','X']
+    dice['1'] = ['I','F','E','H','E','Y']
+    dice['2'] = ['D','E','N','O','W','S']
+    dice['3'] = ['U','T','O','K','N','D']
+    dice['4'] = ['H','M','S','R','O','W']
+    dice['5'] = ['L','U','P','E','T','S']
+    dice['6'] = ['A','C','I','T','O','A']
+    dice['7'] = ['Y','L','G','K','U','E']
+    dice['8'] = ['E','H','I','S','P','N']
+    dice['9'] = ['QU','B','M','J','O','A']
+    dice['10'] = ['V','E','T','I','G','N']
+    dice['11'] = ['B','A','L','I','Y','T']
+    dice['12'] = ['E','Z','A','V','N','D']
+    dice['13'] = ['R','A','L','E','S','C']
+    dice['14'] = ['U','W','I','L','R','G']
+    dice['15'] = ['P','A','C','E','M','D']
+    spent_dice = []
+    def get_die():
+        found = 0
+        thisdie = 0
+        while found < 1:
+            thisdie = choice(range(0,16))
+            if thisdie not in spent_dice:
+                found = 1
+                spent_dice.append(thisdie)
+        return thisdie
+    def get_face(die_number):
+        face_label = choice(dice[str(die_number)])
+        return face_label
+    return {(x, y): get_face(get_die()) for x in range(X) for y in range(Y)}
 
 def get_neighbours():
     """Return a dictionary with all the neighbours surrounding a particular position"""
@@ -67,7 +96,6 @@ def get_dictionary():
     return dictionary, stems
 
 
-@timeit
 def get_words():
     """Search each grid position and return all the words found"""
     for position in grid:
@@ -85,14 +113,33 @@ def print_grid(grid):
         s += '\n'
     print s
 
+def word_score(word):
+    """Returns the boggle score for a given word"""
+    wl = len(word)
+    if wl < 3:
+        return 0
+    if ((wl == 3) or (wl == 4)):
+        return 1
+    if wl == 5:
+        return 2
+    if wl == 6:
+        return 3
+    if wl == 7:
+        return 5
+    if wl >= 8:
+        return 11
 
 size = X, Y = 4, 4
 grid = get_grid()
 neighbours = get_neighbours()
 dictionary, stems = get_dictionary()
 paths = []
-
-
 print_grid(grid)
 words = get_words()
-print words
+wordset = set(words)
+totalwords = len(wordset)
+
+print "Found "+str(totalwords) + " total words:"
+for item in sorted(wordset):
+    print "\t"+item+"\t"+str(word_score(item))
+
