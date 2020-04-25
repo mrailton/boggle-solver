@@ -139,7 +139,9 @@ words = get_words()
 wordset = set(words)
 totalwords = len(wordset)
 
-print "Found "+str(totalwords) + " total words:"
+print "Found "+str(totalwords) + " words:"
+print " Word\tPoints"
+print "--------------"
 for item in sorted(wordset):
-    print "\t"+item+"\t"+str(word_score(item))
+    print item+"\t"+str(word_score(item))
 
