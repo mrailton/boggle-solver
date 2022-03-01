@@ -3,8 +3,6 @@ from string import ascii_uppercase
 import logging
 import time
 
-# logging.basicConfig(level=logging.INFO)
-
 
 def timeit(method):
     """Calculates time taken to run a function when called"""
