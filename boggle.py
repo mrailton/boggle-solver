@@ -1,18 +1,6 @@
 from random import choice
-from string import ascii_uppercase
 import logging
-import time
 
-
-def timeit(method):
-    """Calculates time taken to run a function when called"""
-    def timed(*args, **kw):
-        t1 = time.time()
-        result = method(*args, **kw)
-        print '%r %2.2f sec' % (method.__name__, time.time() -t1)
-        return result
-
-    return timed
 
 
 def get_grid():
@@ -109,7 +97,7 @@ def print_grid(grid):
         for x in range(X):
             s += grid[x, y] + ' '
         s += '\n'
-    print s
+    print (s)
 
 def word_score(word):
     """Returns the boggle score for a given word"""
@@ -137,9 +125,9 @@ words = get_words()
 wordset = set(words)
 totalwords = len(wordset)
 
-print "Found "+str(totalwords) + " words:"
-print " Word\tPoints"
-print "--------------"
+print ("Found "+str(totalwords) + " words:")
+print (" Word\tPoints")
+print ("--------------")
 for item in sorted(wordset):
-    print item+"\t"+str(word_score(item))
+    print (item+"\t"+str(word_score(item)))
 
